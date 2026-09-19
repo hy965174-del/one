@@ -1,0 +1,66 @@
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - generic [ref=e4]: 별자리
+    - button "학생용 보기" [active] [ref=e56] [cursor=pointer]
+  - main [ref=e7]:
+    - generic [ref=e57]:
+      - generic [ref=e58]:
+        - generic [ref=e59]:
+          - generic [ref=e60]: Teacher studio
+          - heading "수업을 만들고, 학생의 탐색을 봅니다." [level=2] [ref=e61]:
+            - text: 수업을 만들고,
+            - emphasis [ref=e62]: 학생의 탐색을 봅니다.
+        - button "+ 활동 만들기" [ref=e63] [cursor=pointer]
+      - generic [ref=e64]:
+        - generic [ref=e65]:
+          - generic [ref=e66]:
+            - heading "우리 반 탐색 현황" [level=3] [ref=e67]
+            - generic [ref=e68]: 3명 참여 중
+          - generic [ref=e69]:
+            - generic [ref=e70]:
+              - generic [ref=e71]: 김
+              - generic [ref=e72]:
+                - heading "김도윤" [level=4] [ref=e73]
+                - paragraph [ref=e74]: 경험에서 강점 찾기
+              - generic [ref=e77]: 100%
+            - generic [ref=e78]:
+              - generic [ref=e79]: 박
+              - generic [ref=e80]:
+                - heading "박서윤" [level=4] [ref=e81]
+                - paragraph [ref=e82]: 직업 카드 탐색하기
+              - generic [ref=e85]: 68%
+            - generic [ref=e86]:
+              - generic [ref=e87]: 이
+              - generic [ref=e88]:
+                - heading "이준호" [level=4] [ref=e89]
+                - paragraph [ref=e90]: 경험에서 강점 찾기
+              - generic [ref=e93]: 32%
+        - generic [ref=e94]:
+          - generic [ref=e95]:
+            - generic [ref=e96]: 68%
+            - paragraph [ref=e97]: 이번 주 활동 진행률
+          - paragraph [ref=e98]:
+            - text: 학생들이 가장 많이 선택한 강점
+            - strong [ref=e99]: 문제 해결 · 공감 · 표현
+        - generic [ref=e100]:
+          - generic [ref=e101]:
+            - heading "수업 활동" [level=3] [ref=e102]
+            - generic [ref=e103]: 관리하기
+          - generic [ref=e104]:
+            - generic [ref=e105]: "01"
+            - generic [ref=e106]:
+              - heading "나의 경험에서 강점 찾기" [level=4] [ref=e107]
+              - paragraph [ref=e108]: 경험 카드 8개 중 마음에 드는 카드 선택
+            - button "학생 답변 보기 →" [ref=e109] [cursor=pointer]
+          - generic [ref=e110]:
+            - generic [ref=e111]: "02"
+            - generic [ref=e112]:
+              - heading "직업 카드 탐색하기" [level=4] [ref=e113]
+              - paragraph [ref=e114]: 관심 직업과 궁금한 점 정리
+            - button "진행 현황 →" [ref=e115] [cursor=pointer]
+          - generic [ref=e116]:
+            - generic [ref=e117]: "03"
+            - generic [ref=e118]:
+              - heading "다음 행동 계획 세우기" [level=4] [ref=e119]
+              - paragraph [ref=e120]: 탐색 후 실천 계획과 성찰 기록
+            - button "제출물 보기 →" [ref=e121] [cursor=pointer]

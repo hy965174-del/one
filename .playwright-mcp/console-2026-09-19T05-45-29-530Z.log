@@ -1,0 +1,5 @@
+[      25ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://bdleojm8viat9wnq.jitda.io/__preview-bridge.js:0
+[     520ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://bdleojm8viat9wnq.jitda.io/favicon.ico:0
+[    7846ms] TypeError: Cannot set properties of null (setting 'textContent')
+    at openJob (https://bdleojm8viat9wnq.jitda.io/:48:92)
+    at b.onclick (https://bdleojm8viat9wnq.jitda.io/:47:382)

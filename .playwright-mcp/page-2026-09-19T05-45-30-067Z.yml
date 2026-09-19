@@ -1,0 +1,23 @@
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - generic [ref=e4]: 별자리
+    - button "교사용 보기" [ref=e6] [cursor=pointer]
+  - main [ref=e7]:
+    - generic [ref=e9]:
+      - generic [ref=e10]:
+        - generic [ref=e11]: Career exploration studio
+        - heading "나를 알고, 일을 탐색하는 시간" [level=1] [ref=e12]:
+          - text: 나를 알고,
+          - emphasis [ref=e13]: 일을 탐색하는
+          - text: 시간
+        - paragraph [ref=e14]: 직업을 대신 정해주는 검사가 아니에요. 내가 해온 경험과 강점을 돌아보고, 궁금한 일을 직접 탐색하며, 다음 한 걸음을 정해보는 진로 탐색 앱입니다.
+        - button "탐색 시작하기 ↗" [ref=e15] [cursor=pointer]:
+          - text: 탐색 시작하기
+          - generic [ref=e16]: ↗
+        - paragraph [ref=e17]: 중학생용 · 약 10분 · 답변은 탐색을 위한 참고 자료예요
+      - generic [ref=e20]:
+        - text: MY CAREER MAP / 01
+        - heading "나의 가능성은 어디로 이어질까?" [level=2] [ref=e21]:
+          - text: 나의 가능성은
+          - text: 어디로 이어질까?
+        - paragraph [ref=e23]: 작은 경험 하나에도 나만의 강점이 숨어 있어요.
