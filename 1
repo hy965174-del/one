@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>길찾기 | 나에게 맞는 고교 선택</title>
+  <meta name="description" content="중3 학생을 위한 고등학교 선택 성향 진단" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Gowun+Dodum&family=Manrope:wght@500;600;700;800&display=swap');
+    :root { --ink:#17211f; --muted:#66736e; --line:#dfe6e1; --paper:#f7f8f4; --white:#fff; --mint:#dff4e7; --green:#13795b; --orange:#f28c52; --yellow:#ffda7a; --night:#183a34; }
+    * { box-sizing:border-box; }
+    body { margin:0; min-width:320px; color:var(--ink); background:var(--paper); font-family:'Gowun Dodum', sans-serif; }
+    button { font:inherit; cursor:pointer; border:0; }
+    .shell { max-width:1180px; margin:auto; padding:26px 32px 56px; }
+    header { display:flex; justify-content:space-between; align-items:center; }
+    .brand { display:flex; align-items:center; gap:11px; font-family:Manrope,sans-serif; font-weight:800; letter-spacing:-.04em; font-size:20px; }
+    .brand-mark { width:34px; height:34px; background:var(--orange); border-radius:12px 12px 12px 3px; position:relative; transform:rotate(-8deg); }
+    .brand-mark:after { content:''; position:absolute; width:8px; height:8px; background:var(--paper); border-radius:50%; left:9px; top:9px; box-shadow:10px 4px 0 var(--paper); }
+    .step-label { color:var(--muted); font-size:13px; }
+    .view { display:none; animation:rise .45s ease both; }
+    .view.active { display:block; }
+    .hero { min-height:calc(100vh - 120px); display:grid; grid-template-columns:1.1fr .9fr; align-items:center; gap:7vw; padding:52px 0; }
+    .eyebrow { display:flex; align-items:center; gap:10px; text-transform:uppercase; letter-spacing:.13em; font:500 12px 'DM Mono',monospace; color:var(--green); }
+    .eyebrow span { width:34px; height:1px; background:var(--green); }
+    h1 { font-family:Manrope,sans-serif; font-size:clamp(45px,6vw,77px); line-height:1.05; letter-spacing:-.08em; margin:22px 0 25px; max-width:650px; }
+    h1 em { color:var(--orange); font-style:normal; }
+    .intro { color:var(--muted); line-height:1.9; font-size:17px; max-width:475px; margin-bottom:34px; }
+    .primary { background:var(--night); color:white; border-radius:9px; padding:17px 24px; display:inline-flex; align-items:center; gap:38px; font-family:Manrope,sans-serif; font-weight:700; transition:.2s; }
+    .primary:hover { background:var(--green); transform:translateY(-2px); }
+    .primary i { font-style:normal; font-size:20px; }
+    .note { color:var(--muted); font-size:12px; margin:14px 0 0 2px; }
+    .poster { position:relative; background:var(--mint); min-height:450px; border-radius:42% 42% 10px 42%; overflow:hidden; padding:38px; transform:rotate(2deg); }
+    .poster:before { content:''; position:absolute; width:280px; height:280px; border-radius:50%; background:#b7e4ce; right:-75px; top:-60px; }
+    .poster-card { position:absolute; width:270px; padding:25px; background:#fffef8; box-shadow:16px 19px 0 rgba(19,121,91,.17); left:16%; top:22%; transform:rotate(-9deg); border-radius:4px; }
+    .poster-card .tiny { font:500 10px 'DM Mono',monospace; color:var(--orange); }
+    .poster-card h2 { font:24px Manrope,sans-serif; letter-spacing:-.06em; line-height:1.13; margin:22px 0 25px; }
+    .poster-lines { height:7px; background:#e9eee8; margin:9px 0; border-radius:5px; }
+    .poster-lines.short { width:58%; }
+    .orb { position:absolute; width:75px; height:75px; background:var(--yellow); border-radius:50%; bottom:50px; right:58px; }
+    .trust { margin-top:45px; border-top:1px solid var(--line); padding-top:18px; font-size:12px; color:var(--muted); display:flex; gap:20px; align-items:center; }
+    .quiz-wrap { max-width:760px; margin:0 auto; padding:90px 0 30px; }
+    .profile-wrap { max-width:560px; margin:0 auto; padding:105px 0 40px; }
+    .profile-wrap h1 { font-size:clamp(38px,5vw,62px); margin-bottom:20px; }
+    .profile-form { background:#fff; border:1px solid var(--line); border-radius:12px; padding:25px; margin-top:32px; }
+    .profile-form label { display:block; color:var(--muted); font-size:14px; margin-bottom:9px; }
+    .profile-form input { width:100%; border:1px solid var(--line); border-radius:8px; padding:15px; font:inherit; font-size:16px; outline:none; }
+    .profile-form input:focus { border-color:var(--green); box-shadow:0 0 0 3px #dff4e7; }
+    .profile-form .primary { margin-top:18px; width:100%; justify-content:space-between; }
+    .progress { height:5px; background:#e4ebe5; border-radius:5px; overflow:hidden; margin:17px 0 56px; }
+    .progress div { height:100%; background:var(--orange); transition:width .4s ease; }
+    .question-count { font:500 12px 'DM Mono',monospace; color:var(--green); }
+    .question-title { font-family:Manrope,sans-serif; font-size:clamp(29px,4vw,48px); letter-spacing:-.07em; line-height:1.14; margin:0 0 12px; }
+    .question-help { color:var(--muted); margin:0 0 32px; }
+    .options { display:grid; gap:12px; }
+    .option { text-align:left; background:#fff; border:1px solid var(--line); border-radius:10px; padding:22px 23px; display:flex; justify-content:space-between; align-items:center; color:var(--ink); transition:.2s; }
+    .option:hover, .option.selected { border-color:var(--green); background:#effaf3; transform:translateX(5px); }
+    .option strong { font-size:16px; font-weight:400; }
+    .option b { width:27px; height:27px; border:1px solid #cbd7cf; border-radius:50%; display:grid; place-items:center; color:transparent; font-size:14px; }
+    .option.selected b { background:var(--green); border-color:var(--green); color:#fff; }
+    .back { background:none; color:var(--muted); margin-top:27px; font-size:14px; }
+    .result-wrap { padding:78px 0 20px; }
+    .result-top { display:flex; justify-content:space-between; align-items:flex-end; gap:30px; border-bottom:1px solid var(--line); padding-bottom:34px; }
+    .result-top h1 { margin:18px 0 0; font-size:clamp(36px,5vw,62px); }
+    .result-top p { max-width:300px; color:var(--muted); line-height:1.8; margin:0; }
+    .result-grid { display:grid; grid-template-columns:1.1fr .9fr; gap:18px; margin-top:24px; }
+    .result-card { background:#fff; border:1px solid var(--line); padding:28px; border-radius:12px; }
+    .type-card { background:var(--night); color:#fff; min-height:340px; display:flex; flex-direction:column; justify-content:space-between; }
+    .type-card .label { color:var(--yellow); font:500 12px 'DM Mono',monospace; }
+    .type-card h2 { font:800 clamp(31px,4vw,50px) Manrope,sans-serif; letter-spacing:-.07em; line-height:1.08; margin:18px 0; }
+    .type-card p { color:#c7dad0; line-height:1.7; margin:0; }
+    .card-title { display:flex; justify-content:space-between; align-items:center; font-family:Manrope,sans-serif; font-size:16px; margin-bottom:22px; }
+    .tag { background:var(--mint); color:var(--green); padding:6px 9px; border-radius:4px; font-size:11px; }
+    .bar-row { margin:17px 0; }
+    .bar-label { display:flex; justify-content:space-between; font-size:14px; margin-bottom:8px; }
+    .bar-label span { color:var(--muted); font-size:12px; }
+    .bar { height:8px; border-radius:8px; background:#edf1ec; overflow:hidden; }
+    .bar i { display:block; height:100%; background:var(--orange); border-radius:inherit; }
+    .guide { grid-column:1 / -1; background:#fff2dd; border-color:#f6dfbd; }
+    .guide p { color:#705d49; line-height:1.8; margin:0; }
+    .report-meta { display:flex; gap:10px; align-items:center; color:var(--muted); font-size:14px; margin-top:15px; }
+    .teacher-note { grid-column:1 / -1; background:#eef5ff; border-color:#d7e6f8; }
+    .teacher-note p { color:#49617b; line-height:1.8; margin:0; }
+    .teacher-note .card-title { color:#274765; }
+    .result-actions { display:flex; justify-content:center; gap:15px; margin-top:30px; }
+    .secondary { background:transparent; border:1px solid var(--line); padding:14px 22px; border-radius:8px; color:var(--ink); }
+    .secondary:hover { border-color:var(--green); }
+    @keyframes rise { from {opacity:0; transform:translateY(12px)} to {opacity:1; transform:none} }
+    @media (max-width:720px) { .shell { padding:20px 20px 40px; } .hero { display:block; min-height:auto; padding:62px 0 30px; } .hero-copy { margin-bottom:50px; } .poster { min-height:330px; } .poster-card { left:11%; top:18%; } .trust { margin-top:33px; } .quiz-wrap,.result-wrap { padding-top:52px; } .result-top,.result-grid { display:block; } .result-top p { margin-top:25px; } .result-card { margin-top:14px; } .type-card { min-height:285px; } .guide { margin-top:14px; } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <div class="brand"><span class="brand-mark"></span>길찾기</div>
+      <div class="step-label" id="stepLabel">나에게 맞는 고교 선택</div>
+    </header>
+
+    <main>
+      <section class="view active" id="homeView">
+        <div class="hero">
+          <div class="hero-copy">
+            <div class="eyebrow"><span></span> Hanam high school compass</div>
+            <h1>내가 원하는<br><em>학교의 모습</em>을<br>찾아보세요.</h1>
+            <p class="intro">진학은 정답을 고르는 일이 아니라, 나에게 중요한 조건을 알아가는 일입니다. 18개의 질문에 답하고 나의 학교 선택 성향과 상담 키워드를 확인해 보세요.</p>
+            <button class="primary" id="startButton">진단 시작하기 <i>↗</i></button>
+            <p class="note">약 3분 · 답변은 저장되지 않아요</p>
+            <div class="trust"><span>하남시 중3 학생용</span><span>·</span><span>선생님과 함께 보는 진학 탐색</span></div>
+          </div>
+          <div class="poster" aria-label="진학 성향 진단 카드 일러스트"><div class="poster-card"><div class="tiny">MY SCHOOL MAP / 01</div><h2>나의 선택을<br>나답게 그려보기</h2><div class="poster-lines"></div><div class="poster-lines short"></div><div class="poster-lines"></div></div><div class="orb"></div></div>
+        </div>
+      </section>
+
+      <section class="view" id="profileView"><div class="profile-wrap"><div class="eyebrow"><span></span> Before we begin</div><h1>먼저, 이름을<br><em>알려주세요.</em></h1><p class="intro">결과 리포트에만 표시되며, 온라인으로 전송되지 않습니다. 선생님과 상담할 때 나의 결과를 쉽게 찾기 위한 정보예요.</p><div class="profile-form"><label for="studentName">학생 이름</label><input id="studentName" type="text" maxlength="20" placeholder="예: 김하남" autocomplete="off" /><button class="primary" id="profileStartButton">진단 시작하기 <i>↗</i></button></div></div></section>
+      <section class="view" id="quizView"><div class="quiz-wrap"><div class="question-count" id="questionCount">QUESTION 01 / 18</div><div class="progress"><div id="progressBar" style="width:5.55%"></div></div><h1 class="question-title" id="questionTitle"></h1><p class="question-help" id="questionHelp"></p><div class="options" id="options"></div><button class="back" id="backButton">← 이전 질문</button></div></section>
+      <section class="view" id="resultView"><div class="result-wrap"><div class="result-top"><div><div class="eyebrow"><span></span> Your school compass</div><h1><span id="studentResultName">학생</span>님의<br><em>학교 선택 나침반</em></h1><div class="report-meta"><span>경기도 하남시 중3 진학 탐색</span><span>·</span><span id="resultDate"></span></div></div><p>이 결과는 학교를 대신 골라주는 답이 아니라, 상담에서 나의 목소리를 더 잘 내기 위한 출발점입니다.</p></div><div class="result-grid"><div class="result-card type-card"><div><div class="label">가장 가까운 학교 환경 성향</div><h2 id="resultTitle">균형 있는<br>성장 탐험가</h2><p id="resultDescription"></p></div><div class="label" id="resultCode">TYPE / BALANCE</div></div><div class="result-card"><div class="card-title">나의 중요 기준 <span class="tag">답변 기반</span></div><div id="bars"></div></div><div class="result-card guide"><div class="card-title">상담 전에 더 이야기해 볼 것 <span>✦</span></div><p id="guideText"></p></div><div class="result-card teacher-note"><div class="card-title">교사용 상담 메모</div><p id="teacherText"></p></div></div><div class="result-actions"><button class="secondary" id="restartButton">다시 진단하기</button><button class="secondary" id="downloadButton">결과 파일 저장</button><button class="primary" id="printButton">인쇄하기 <i>↗</i></button></div></div></section>
+    </main>
+  </div>
+  <script src="/__preview-bridge.js" data-preview-bridge></script>
+  <script>
+     const questions = [
+      { title:'고등학교에서 가장 먼저 얻고 싶은 것은?', help:'가장 마음이 가는 문장을 하나 골라주세요.', opts:[['깊이 있게 공부해 실력을 키우는 것','study'],['꾸준히 노력해 안정적인 결과를 얻는 것','grade'],['다양한 활동 속에서 나를 발견하는 것','activity'],['관심 분야를 직접 경험해보는 것','career']] },
+      { title:'시험 기간의 나는 어떤 모습에 가까운가요?', help:'지금의 나를 떠올려 솔직하게 답해보세요.', opts:[['목표가 높을수록 더 집중된다','study'],['계획을 세우면 꾸준히 해내는 편이다','grade'],['시험과 활동을 균형 있게 하고 싶다','balance'],['시험보다 직접 해보는 활동이 재미있다','activity']] },
+      { title:'아직 진로가 정해지지 않았다면?', help:'지금 확신이 없어도 괜찮습니다.', opts:[['일단 학업 실력을 쌓고 나중에 정하고 싶다','study'],['여러 활동을 경험하며 천천히 찾고 싶다','activity'],['직업과 연결된 실습을 해보며 찾고 싶다','career'],['친구와 선생님의 도움을 받으며 정하고 싶다','balance']] },
+      { title:'공부 분위기가 강한 학교라면?', help:'학교의 분위기가 나에게 미칠 영향을 생각해보세요.', opts:[['자극을 받아 더 잘할 수 있을 것 같다','study'],['나의 속도를 지키며 꾸준히 하고 싶다','grade'],['경쟁이 너무 세면 부담스러울 것 같다','balance'],['공부 외 활동도 충분히 있으면 좋겠다','activity']] },
+      { title:'내신 평가에서 가장 중요하게 보는 것은?', help:'평가 방식과 나의 강점을 연결해보세요.', opts:[['시험 난도가 높아도 실력으로 도전하고 싶다','study'],['내가 노력한 만큼 꾸준히 반영되는 것','grade'],['시험과 수행평가가 균형 있는 것','balance'],['성적 외 활동과 프로젝트도 인정받는 것','activity']] },
+      { title:'학교생활에서 가장 기대되는 장면은?', help:'입학 첫날의 나를 상상해보세요.', opts:[['수업에서 어려운 문제를 해결하는 장면','study'],['선생님과 목표를 세우고 성취하는 장면','grade'],['친구들과 편안하게 어울리는 장면','balance'],['동아리나 학생자치 활동을 기획하는 장면','activity']] },
+      { title:'방과 후 시간은 어떻게 보내고 싶나요?', help:'학교가 나의 하루에 차지하는 모습을 생각해보세요.', opts:[['복습과 심화 공부','study'],['계획한 공부와 충분한 휴식','grade'],['친구와 취미, 활동을 적당히 나누기','balance'],['동아리·봉사·대회 참여','activity']] },
+      { title:'실습이나 자격증에 대한 생각은?', help:'직업교육과 진로 경험에 대한 관심을 묻는 질문이에요.', opts:[['대학 준비가 우선이라 아직은 관심이 적다','study'],['공부와 함께 가능하면 해보고 싶다','grade'],['관심 분야라면 직접 해보고 싶다','career'],['아직 무엇을 좋아하는지부터 찾아보고 싶다','activity']] },
+      { title:'졸업 후의 모습에 가장 가까운 것은?', help:'정해진 답이 아니라 현재의 마음을 골라주세요.', opts:[['좋은 대학에서 더 깊이 공부하고 싶다','study'],['학생부를 잘 준비해 대학에 진학하고 싶다','grade'],['대학과 취업을 모두 열어두고 싶다','balance'],['원하는 분야에 취업하거나 실무를 시작하고 싶다','career']] },
+      { title:'학교가 나를 도와주는 방식은?', help:'어떤 지원을 받을 때 가장 잘 성장하나요?', opts:[['높은 수준의 수업과 심화 자료','study'],['꼼꼼한 일정 관리와 개별 상담','grade'],['필요할 때 의논할 수 있는 따뜻한 관계','balance'],['진로·취업 정보와 현장 연결','career']] },
+      { title:'학교 규칙과 자율성에 대해서는?', help:'관리와 자유 중 나에게 맞는 쪽을 골라보세요.', opts:[['목표를 위해 엄격한 관리도 괜찮다','study'],['기본 규칙과 일정한 관리가 있으면 편하다','grade'],['나의 선택과 개성을 존중받고 싶다','activity'],['실습과 활동에 필요한 규칙이라면 잘 따를 수 있다','career']] },
+      { title:'친구 관계에서 가장 중요한 것은?', help:'학교생활의 관계 욕구를 확인해보세요.', opts:[['서로 공부를 자극하는 관계','study'],['믿고 의지할 수 있는 소수의 관계','grade'],['편안하고 즐거운 분위기','balance'],['관심사가 비슷해 함께 활동할 수 있는 관계','activity']] },
+      { title:'통학 시간이 50분 정도 걸린다면?', help:'매일 반복되는 생활 조건을 생각해보세요.', opts:[['원하는 학업 환경이라면 감수할 수 있다','study'],['체력과 수면을 위해 가까운 학교가 좋다','grade'],['통학과 학교생활의 균형을 먼저 따진다','balance'],['기숙사나 새로운 환경도 경험해보고 싶다','activity']] },
+      { title:'나의 학습 방식에 가까운 것은?', help:'누가 시켜서가 아니라 실제 모습을 떠올려보세요.', opts:[['어려운 문제를 오래 고민하는 편','study'],['작은 계획을 세워 매일 실천하는 편','grade'],['상황에 따라 방법을 바꾸는 편','balance'],['직접 만들고 해보면서 배우는 편','career']] },
+      { title:'학교를 알아볼 때 꼭 보고 싶은 정보는?', help:'학교 홈페이지나 설명회에서 무엇을 먼저 찾을까요?', opts:[['수업 수준, 자율학습, 진학 결과','study'],['학생 수, 평가 방식, 상담 체계','grade'],['학교 분위기, 통학, 생활지도','balance'],['학과, 실습, 자격증, 취업 사례','career']] },
+      { title:'부모님과 나의 생각이 다르다면?', help:'학교 선택에서 나의 목소리를 생각해보세요.', opts:[['목표와 근거를 준비해 설득해본다','study'],['조건을 표로 비교해 함께 결정한다','grade'],['서로 걱정하는 점부터 충분히 이야기한다','balance'],['직접 체험하거나 학교를 방문해 확인한다','career']] },
+      { title:'경쟁이 치열한 학교에 대해 어떻게 느끼나요?', help:'경쟁은 학생마다 다르게 느껴질 수 있습니다.', opts:[['도전할수록 실력이 커질 것 같다','study'],['경쟁보다 내 성적 흐름을 안정적으로 관리하고 싶다','grade'],['적당한 경쟁과 협력이 함께 있으면 좋겠다','balance'],['경쟁보다 나만의 활동과 진로가 중요하다','career']] },
+      { title:'지금 내 마음에 가장 가까운 문장은?', help:'마지막 질문이에요. 첫 느낌대로 골라보세요.', opts:[['나는 목표를 향해 집중해서 성장하고 싶다','study'],['나는 나에게 맞는 방식으로 꾸준히 쌓고 싶다','grade'],['나는 편안함과 성장을 모두 놓치고 싶지 않다','balance'],['나는 여러 경험을 통해 나만의 길을 찾고 싶다','activity']] }
+    ];
+     let index=0, answers=[], studentName='';
+    const $=id=>document.getElementById(id);
+    function show(id){ document.querySelectorAll('.view').forEach(v=>v.classList.remove('active')); $(id).classList.add('active'); window.scrollTo(0,0); }
+    function renderQuestion(){ const q=questions[index]; $('questionCount').textContent=`QUESTION ${String(index+1).padStart(2,'0')} / ${questions.length}`; $('progressBar').style.width=`${((index+1)/questions.length)*100}%`; $('questionTitle').textContent=q.title; $('questionHelp').textContent=q.help; $('options').innerHTML=q.opts.map((o,i)=>`<button class="option ${answers[index]===o[1]?'selected':''}" data-value="${o[1]}"><strong>${o[0]}</strong><b>✓</b></button>`).join(''); document.querySelectorAll('.option').forEach(btn=>btn.addEventListener('click',()=>{ answers[index]=btn.dataset.value; if(index<questions.length-1){ index++; renderQuestion(); } else renderResult(); })); $('backButton').style.visibility=index?'visible':'hidden'; }
+     function renderResult(){ const count={study:0,grade:0,activity:0,career:0,balance:0}; answers.forEach(a=>count[a]++); const order=Object.keys(count).sort((a,b)=>count[b]-count[a]); const winner=order[0], second=order[1]; const types={study:['집중해서 실력을 키우는 학업 몰입형','학업 성취와 수업 수준을 중요하게 생각해요. 목표가 분명할수록 경쟁도 성장의 자극으로 받아들일 수 있습니다.','FOCUS'],grade:['꾸준히 결과를 쌓는 내신 관리형','성실하게 계획을 실천하며 노력한 만큼의 결과를 원해요. 평가 방식과 개별 관리가 중요한 기준입니다.','STEADY'],activity:['다양한 경험을 좋아하는 활동 탐험형','동아리와 프로젝트 같은 경험 속에서 나를 발견하고 싶어 해요. 진로를 열어두고 탐색하는 힘이 있습니다.','EXPLORE'],career:['직접 경험하며 진로를 만드는 실천형','실습과 자격증처럼 구체적인 경험을 선호해요. 관심 분야를 현실적인 진로와 연결하고 싶어 합니다.','PRACTICE'],balance:['학업과 생활의 균형을 원하는 안정 성장형','공부, 친구, 활동, 휴식 모두 중요해요. 지나친 경쟁보다 편안함과 성장의 균형을 원합니다.','BALANCE']}; const type=types[winner]; const labels={study:'학업 몰입',grade:'내신 관리',activity:'활동 탐험',career:'진로 실천',balance:'생활 균형'}; const vals=Object.entries(count).sort((a,b)=>b[1]-a[1]); const guide={study:'수업 수준, 심화수업, 자기주도학습 시간, 최근 진학 결과가 나의 목표와 맞는지 확인해보세요.',grade:'학생 수, 과목별 수강 인원, 시험·수행평가 비율, 개별 상담과 성적 관리 방식을 물어보세요.',activity:'동아리·대회·봉사 활동의 종류보다 실제 참여 기회와 학생 주도성이 충분한지 확인해보세요.',career:'관심 학과와 실습의 연결성, 자격증 지원, 졸업 후 취업·진학 사례와 진로 변경 가능성을 물어보세요.',balance:'통학 시간, 학교 분위기, 생활지도, 친구 관계와 학업 부담이 지속 가능한 수준인지 살펴보세요.'}; const parent='부모님과는 “어떤 학교가 더 좋은가”보다 “내가 어떤 환경에서 꾸준히 성장할 수 있는가”를 먼저 이야기해보세요. 의견이 다르다면 통학, 학업 분위기, 진로 선택지처럼 구체적인 기준을 하나씩 비교해보면 좋아요.'; $('studentResultName').textContent=studentName; $('resultTitle').textContent=type[0]; $('resultDescription').textContent=type[1]; $('resultCode').textContent=`TYPE / ${type[2]} · 함께 나타난 성향: ${types[second][0]}`; $('bars').innerHTML=vals.map(([key,value])=>`<div class="bar-row"><div class="bar-label">${labels[key]} <span>${Math.round(value/questions.length*100)}%</span></div><div class="bar"><i style="width:${Math.max(15,value/questions.length*100)}%"></i></div></div>`).join(''); $('guideText').textContent=guide[winner] + ' 학교를 결정하기 전에는 가족의 기대와 통학·비용 조건도 함께 이야기해보세요.'; $('teacherText').textContent=`${studentName} 학생은 ${type[0]} 성향이 가장 높고, ${types[second][0]} 성향이 함께 나타났습니다. 상담에서는 ${labels[vals[0][0]]}, ${labels[vals[1][0]]}을(를) 중심으로 실제 학교 환경과 학생의 생활 가능성을 확인해보세요. ${parent}`; $('resultDate').textContent=new Date().toLocaleDateString('ko-KR'); show('resultView'); }
+     function downloadResult(){ const text={student:studentName,region:'경기도 하남시',date:new Date().toISOString(),answers,primary:$('resultTitle').textContent,secondary:$('resultCode').textContent,priorities:$('bars').innerText,counseling:$('guideText').textContent,teacherNote:$('teacherText').textContent}; const blob=new Blob([JSON.stringify(text,null,2)],{type:'application/json'}); const link=document.createElement('a'); link.href=URL.createObjectURL(blob); link.download=`길찾기_${studentName}_진단결과.json`; link.click(); URL.revokeObjectURL(link.href); }
+     $('startButton').onclick=()=>{show('profileView'); setTimeout(()=>$('studentName').focus(),100);}; $('profileStartButton').onclick=()=>{const value=$('studentName').value.trim(); if(!value){$('studentName').focus();$('studentName').setCustomValidity('이름을 입력해주세요.');$('studentName').reportValidity();return;} $('studentName').setCustomValidity(''); studentName=value; index=0; answers=[]; show('quizView'); renderQuestion();}; $('studentName').addEventListener('keydown',event=>{if(event.key==='Enter')$('profileStartButton').click();}); $('backButton').onclick=()=>{if(index>0){index--;renderQuestion();}}; $('restartButton').onclick=()=>{index=0;answers=[];studentName='';$('studentName').value='';show('homeView');}; $('downloadButton').onclick=downloadResult; $('printButton').onclick=()=>window.print();
+  </script>
+</body>
+</html>
