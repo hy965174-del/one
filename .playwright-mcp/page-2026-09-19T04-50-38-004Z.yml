@@ -1,0 +1,28 @@
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - generic [ref=e4]: 길찾기
+    - generic [ref=e6]: 나에게 맞는 고교 선택
+  - main [ref=e7]:
+    - generic [ref=e9]:
+      - generic [ref=e10]:
+        - generic [ref=e11]: High school compass
+        - heading "내가 원하는 학교의 모습을 찾아보세요." [level=1] [ref=e13]:
+          - text: 내가 원하는
+          - emphasis [ref=e14]: 학교의 모습
+          - text: 을
+          - text: 찾아보세요.
+        - paragraph [ref=e15]: 진학은 정답을 고르는 일이 아니라, 나에게 중요한 조건을 알아가는 일입니다. 18개의 질문에 답하고 나의 학교 선택 성향과 상담 키워드를 확인해 보세요.
+        - button "진단 시작하기 ↗" [ref=e16] [cursor=pointer]:
+          - text: 진단 시작하기
+          - generic [ref=e17]: ↗
+        - paragraph [ref=e18]: 약 3분 · 답변은 저장되지 않아요
+        - generic [ref=e19]:
+          - generic [ref=e20]: 중3 학생용
+          - generic [ref=e21]: ·
+          - generic [ref=e22]: 선생님과 함께 보는 진학 탐색
+      - generic "진학 성향 진단 카드 일러스트" [ref=e23]:
+        - generic [ref=e24]:
+          - generic [ref=e25]: MY SCHOOL MAP / 01
+          - heading "나의 선택을 나답게 그려보기" [level=2] [ref=e26]:
+            - text: 나의 선택을
+            - text: 나답게 그려보기
